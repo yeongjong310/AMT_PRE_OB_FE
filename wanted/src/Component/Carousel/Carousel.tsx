@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable no-nested-ternary */
@@ -13,24 +14,27 @@ export default function Carousel(): ReactElement {
   const imageWidth = carouselRef.current?.children[0].clientWidth || 1015;
   let isMoving = false;
 
-  const moveSlide = (curSlide: number): void => {
+  const getSlidePositionX = (slideIndex: number) =>
+    slideIndex * -imageWidth + (window.innerWidth - imageWidth) / 2;
+
+  const setSlideToCenter = (slide: number): void => {
     if (!carouselRef.current || isMoving) return;
     isMoving = true;
     carouselRef.current.style.transition = 'transform 500ms ease-in-out';
-    carouselRef.current.style.transform = `translate3D(${
-      curSlide * -imageWidth + (window.innerWidth - imageWidth) / 2
-    }px, 0, 0)`;
+    carouselRef.current.style.transform = `translate3D(${getSlidePositionX(
+      slide,
+    )}px, 0, 0)`;
 
     setTimeout(() => {
       if (!carouselRef.current) return;
 
       carouselRef.current.style.transition = 'none';
       setCurrentSlide(
-        curSlide === carouselRef.current.children.length - 2
+        slide === carouselRef.current.children.length - 2
           ? 2
-          : curSlide === 1
+          : slide === 1
           ? carouselRef.current.children.length - 3
-          : curSlide,
+          : slide,
       );
     }, 500);
   };
@@ -40,9 +44,7 @@ export default function Carousel(): ReactElement {
       <StyledCarouselSlider
         ref={carouselRef}
         style={{
-          transform: `translate3D(${
-            currentSlide * -imageWidth + (window.innerWidth - imageWidth) / 2
-          }px, 0, 0)`,
+          transform: `translate3D(${getSlidePositionX(currentSlide)}px, 0, 0)`,
         }}
       >
         {[
@@ -58,7 +60,7 @@ export default function Carousel(): ReactElement {
       <button
         type="button"
         onClick={() => {
-          moveSlide(currentSlide - 1);
+          setSlideToCenter(currentSlide - 1);
         }}
       >
         prev
@@ -66,7 +68,7 @@ export default function Carousel(): ReactElement {
       <button
         type="button"
         onClick={() => {
-          moveSlide(currentSlide + 1);
+          setSlideToCenter(currentSlide + 1);
         }}
       >
         next
