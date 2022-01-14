@@ -8,6 +8,12 @@ export const StyledCarouselSlider = styled.ul`
   list-style: none;
   display: flex;
   li {
+    transition: filter 0.1s;
+    filter: brightness(50%);
     padding: 0 12px;
+  }
+
+  li.active {
+    filter: brightness(100%);
   }
 `;
