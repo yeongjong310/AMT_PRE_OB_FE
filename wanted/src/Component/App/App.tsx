@@ -1,10 +1,11 @@
 import React from 'react';
 import Carousel from '../Carousel/Carousel';
+import slideImgs from '../data/slideImgs';
 
 function App() {
   return (
     <div className="App">
-      <Carousel />
+      <Carousel imgs={slideImgs} duration={500} />
     </div>
   );
 }

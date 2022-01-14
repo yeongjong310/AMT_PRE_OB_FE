@@ -6,9 +6,12 @@
 // eslint-disable-next-line object-curly-newline
 import React, { ReactElement, useRef, useState } from 'react';
 import { StyledCarousel, StyledCarouselSlider } from './Carousel.styled';
-import slideImgs from './slideImgs';
+import CarouselProps from './Carousel.type';
 
-export default function Carousel(): ReactElement {
+export default function Carousel({
+  imgs,
+  duration,
+}: CarouselProps): ReactElement {
   const carouselRef = useRef<HTMLUListElement>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(2);
   const imageWidth = carouselRef.current?.children[0].clientWidth || 1015;
@@ -20,7 +23,7 @@ export default function Carousel(): ReactElement {
   const setSlideToCenter = (slide: number): void => {
     if (!carouselRef.current || isMoving) return;
     isMoving = true;
-    carouselRef.current.style.transition = 'transform 500ms ease-in-out';
+    carouselRef.current.style.transition = `transform ${duration}ms ease 0s`;
     carouselRef.current.style.transform = `translate3D(${getSlidePositionX(
       slide,
     )}px, 0, 0)`;
@@ -36,7 +39,7 @@ export default function Carousel(): ReactElement {
           ? carouselRef.current.children.length - 3
           : slide,
       );
-    }, 500);
+    }, duration);
   };
 
   return (
@@ -48,9 +51,9 @@ export default function Carousel(): ReactElement {
         }}
       >
         {[
-          ...slideImgs.slice(slideImgs.length - 2, slideImgs.length),
-          ...slideImgs,
-          ...slideImgs.slice(0, 2),
+          ...imgs.slice(imgs.length - 2, imgs.length),
+          ...imgs,
+          ...imgs.slice(0, 2),
         ].map(({ id, src }, index) => (
           <li key={id + index}>
             <img src={src} alt={`slide${id}`} />
