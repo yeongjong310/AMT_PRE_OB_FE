@@ -1,6 +1,6 @@
 import React from 'react';
 import Carousel from '../Carousel/Carousel';
-import slideImgs from '../data/slideImgs';
+import slideImgs from '../../data/slideImgs';
 
 function App() {
   return (
