@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const StyledCarousel = styled.div``;
+export const StyledCarousel = styled.div`
+  overflow: hidden;
+`;
 
 export const StyledCarouselSlider = styled.ul`
   padding: 0;
@@ -8,7 +10,6 @@ export const StyledCarouselSlider = styled.ul`
   list-style: none;
   display: flex;
   li {
-    transition: filter 0.1s;
     filter: brightness(50%);
     padding: 0 12px;
   }
