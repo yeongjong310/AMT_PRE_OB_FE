@@ -58,12 +58,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
 
   return (
     <StyledCarousel>
-      <StyledCarouselSlider
-        ref={carouselRef}
-        style={{
-          transform: `translate3D(${getSlidePositionX(currentSlide)}px, 0, 0)`,
-        }}
-      >
+      <StyledCarouselSlider ref={carouselRef} positionX={getSlidePositionX(currentSlide)}>
         {[...imgs.slice(imgs.length - 2, imgs.length), ...imgs, ...imgs.slice(0, 2)].map(
           ({ id, src }, index) => (
             <li key={id + index} className={index === currentSlide ? 'active' : undefined}>

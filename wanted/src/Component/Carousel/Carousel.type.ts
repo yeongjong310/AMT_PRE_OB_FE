@@ -5,3 +5,7 @@ export default interface CarouselProps {
   }[];
   duration: number;
 }
+
+export interface StyledCarouselSliderProps {
+  positionX: number;
+}
