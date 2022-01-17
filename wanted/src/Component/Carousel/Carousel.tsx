@@ -6,7 +6,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable implicit-arrow-linebreak */
-import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { StyledCarousel, StyledCarouselSlider } from './Carousel.styled';
 import CarouselProps from './Carousel.type';
 import StyledCarouselArrowButton from './CarouselArrowButton.styled';
@@ -22,32 +22,35 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
 
   const getSlidePositionX = (slide: number) => slide * -slideWidth + paddingExceptSlideWidth();
 
-  const setSlideToCenter = (slide: number): void => {
-    if (!carouselRef.current || isMoving.current) return;
-    carouselRef.current.style.transition = `transform ${duration}ms ease`;
-    const realSlide =
-      slide === carouselRef.current.children.length - 2
-        ? 2
-        : slide === 1
-        ? carouselRef.current.children.length - 3
-        : slide;
+  const setSlideToCenter = useCallback(
+    (slide: number): void => {
+      if (!carouselRef.current || isMoving.current) return;
+      carouselRef.current.style.transition = `transform ${duration}ms ease`;
+      const realSlide =
+        slide === carouselRef.current.children.length - 2
+          ? 2
+          : slide === 1
+          ? carouselRef.current.children.length - 3
+          : slide;
 
-    isMoving.current = true;
+      isMoving.current = true;
 
-    setCurrentSlide(slide);
+      setCurrentSlide(slide);
 
-    if (realSlide !== slide) {
+      if (realSlide !== slide) {
+        setTimeout(() => {
+          if (!carouselRef.current) return;
+          carouselRef.current.style.transition = 'none';
+          setCurrentSlide(realSlide);
+        }, duration);
+      }
+
       setTimeout(() => {
-        if (!carouselRef.current) return;
-        carouselRef.current.style.transition = 'none';
-        setCurrentSlide(realSlide);
+        isMoving.current = false;
       }, duration);
-    }
-
-    setTimeout(() => {
-      isMoving.current = false;
-    }, duration);
-  };
+    },
+    [duration],
+  );
 
   const updateActiveSlide = (items: Element[], slide: number) => {
     items?.forEach(($item, index) => {
@@ -60,6 +63,14 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
       updateActiveSlide(Array.from(carouselRef.current.children), currentSlide);
     }
   }, [currentSlide]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => setSlideToCenter(currentSlide + 1), 4000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [currentSlide, setSlideToCenter]);
 
   return (
     <StyledCarousel>
