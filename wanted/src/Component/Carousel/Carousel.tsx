@@ -18,10 +18,11 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
   const [currentSlide, setCurrentSlide] = useState<number>(2);
   const isMoving = useRef(false);
   const [isPausedSlide, setIsPausedSlide] = useState<boolean>(false);
+  const [innerWidth, setInnerWidth] = useState<number>(window.innerWidth);
 
   const slideWidth = carouselRef.current?.children[0].clientWidth || 1084;
 
-  const paddingExceptSlideWidth = () => (window.innerWidth - slideWidth) / 2;
+  const paddingExceptSlideWidth = () => (innerWidth - slideWidth) / 2;
 
   const getSlidePositionX = (slide: number) => slide * -slideWidth + paddingExceptSlideWidth();
 
@@ -60,6 +61,18 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
       index === slide ? $item.classList.add('active') : $item.classList.remove('active');
     });
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setInnerWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [innerWidth]);
 
   useEffect(() => {
     if (carouselRef.current) {
