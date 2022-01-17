@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable operator-linebreak */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/no-array-index-key */
@@ -5,7 +6,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable implicit-arrow-linebreak */
-import React, { ReactElement, useRef, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { StyledCarousel, StyledCarouselSlider } from './Carousel.styled';
 import CarouselProps from './Carousel.type';
 import StyledCarouselArrowButton from './CarouselArrowButton.styled';
@@ -21,12 +22,6 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
 
   const getSlidePositionX = (slide: number) => slide * -slideWidth + paddingExceptSlideWidth();
 
-  const updateActiveSlide = (items: Element[], slide: number) => {
-    items.forEach(($item, index) => {
-      index === slide ? $item.classList.add('active') : $item.classList.remove('active');
-    });
-  };
-
   const setSlideToCenter = (slide: number): void => {
     if (!carouselRef.current || isMoving.current) return;
     carouselRef.current.style.transition = `transform ${duration}ms ease`;
@@ -41,8 +36,6 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
 
     setCurrentSlide(slide);
 
-    updateActiveSlide(Array.from(carouselRef.current.children), slide);
-
     if (realSlide !== slide) {
       setTimeout(() => {
         if (!carouselRef.current) return;
@@ -55,6 +48,18 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
       isMoving.current = false;
     }, duration);
   };
+
+  const updateActiveSlide = (items: Element[], slide: number) => {
+    items?.forEach(($item, index) => {
+      index === slide ? $item.classList.add('active') : $item.classList.remove('active');
+    });
+  };
+
+  useEffect(() => {
+    if (carouselRef.current) {
+      updateActiveSlide(Array.from(carouselRef.current.children), currentSlide);
+    }
+  }, [currentSlide]);
 
   return (
     <StyledCarousel>
