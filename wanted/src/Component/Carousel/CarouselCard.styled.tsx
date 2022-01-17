@@ -9,17 +9,20 @@ const StyledCarouselCard = styled.div`
   background-color: #fff;
   text-align: left;
   left: 34px;
-  padding: 20px 20px 0;
   box-sizing: border-box;
   color: #333;
+  padding-top: 20px;
+
+  > * {
+    margin: 0 20px;
+  }
+
   h2 {
-    margin: 0;
     font-size: 20px;
     font-weight: 700;
     line-height: 1.5;
   }
   h3 {
-    margin: 0;
     height: 44px;
     font-size: 14px;
     font-weight: 500;
