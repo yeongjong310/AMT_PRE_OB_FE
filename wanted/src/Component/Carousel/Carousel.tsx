@@ -91,7 +91,12 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
         {[...imgs.slice(imgs.length - 2, imgs.length), ...imgs, ...imgs.slice(0, 2)].map(
           ({ id, src, title, description }, index) => (
             <li key={id + index} className={index === currentSlide ? 'active' : undefined}>
-              <CarouselCard title={title} description={description} href="#" />
+              <CarouselCard
+                className="carousel-card"
+                title={title}
+                description={description}
+                href="#"
+              />
               <img src={src} alt={`slide${id}`} />
             </li>
           ),

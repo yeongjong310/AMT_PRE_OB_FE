@@ -20,9 +20,17 @@ export const StyledCarouselSlider = styled.ul<StyledCarouselSliderProps>`
       border-radius: 4px;
       object-fit: cover;
     }
+
+    .carousel-card {
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+    }
   }
 
   li.active {
     filter: brightness(100%);
+    .carousel-card {
+      opacity: 1;
+    }
   }
 `;

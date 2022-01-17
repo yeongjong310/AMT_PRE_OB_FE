@@ -6,9 +6,10 @@ export default function CarouselCard({
   title,
   description,
   href,
+  className,
 }: CarouselCardProps): ReactElement {
   return (
-    <StyledCarouselCard>
+    <StyledCarouselCard className={className}>
       <h2>{title}</h2>
       <h3>{description}</h3>
       <hr />
