@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 
 const StyledCarouselCard = styled.div`
   position: absolute;
-  bottom: 28px;
+  bottom: 22px;
   width: 330px;
   height: 146px;
   border-radius: 4px;

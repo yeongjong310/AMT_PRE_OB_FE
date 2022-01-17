@@ -12,6 +12,7 @@ export const StyledCarouselSlider = styled.ul<StyledCarouselSliderProps>`
   list-style: none;
   display: flex;
   transform: translate3D(${({ positionX }) => positionX}px, 0, 0);
+
   li {
     filter: brightness(50%);
     padding: 0 12px;
@@ -20,7 +21,10 @@ export const StyledCarouselSlider = styled.ul<StyledCarouselSliderProps>`
       border-radius: 4px;
       object-fit: cover;
     }
-
+    a {
+      display: block;
+      line-height: 0;
+    }
     .carousel-card {
       opacity: 0;
       transition: opacity 0.4s ease-in-out;

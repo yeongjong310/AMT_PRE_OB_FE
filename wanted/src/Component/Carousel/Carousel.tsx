@@ -110,7 +110,9 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
                 description={description}
                 href="#"
               />
-              <img src={src} alt={`slide${id}`} />
+              <a href="#">
+                <img src={src} alt={`slide${id}`} />
+              </a>
             </li>
           ),
         )}
