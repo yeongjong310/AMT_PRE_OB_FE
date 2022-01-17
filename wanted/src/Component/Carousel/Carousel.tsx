@@ -15,6 +15,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
   const carouselRef = useRef<HTMLUListElement>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(2);
   const isMoving = useRef(false);
+  const [isPausedSlide, setIsPausedSlide] = useState<boolean>(false);
 
   const slideWidth = carouselRef.current?.children[0].clientWidth || 1084;
 
@@ -64,16 +65,26 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
     }
   }, [currentSlide]);
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    const intervalId = setTimeout(() => setSlideToCenter(currentSlide + 1), 4000);
+    if (!isPausedSlide) {
+      const id = window.setTimeout(() => setSlideToCenter(currentSlide + 1), 4000);
 
-    return () => {
-      clearTimeout(intervalId);
-    };
-  }, [currentSlide, setSlideToCenter]);
+      return () => {
+        clearTimeout(id);
+      };
+    }
+  }, [currentSlide, setSlideToCenter, isPausedSlide]);
 
   return (
-    <StyledCarousel>
+    <StyledCarousel
+      onMouseEnter={() => {
+        setIsPausedSlide(true);
+      }}
+      onMouseLeave={() => {
+        setIsPausedSlide(false);
+      }}
+    >
       <StyledCarouselSlider ref={carouselRef} positionX={getSlidePositionX(currentSlide)}>
         {[...imgs.slice(imgs.length - 2, imgs.length), ...imgs, ...imgs.slice(0, 2)].map(
           ({ id, src }, index) => (
