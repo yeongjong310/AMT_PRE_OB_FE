@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { StyledCarouselSliderProps } from './Carousel.type';
 
 export const StyledCarousel = styled.div`
   overflow: hidden;
+  position: relative;
 `;
 
 export const StyledCarouselSlider = styled.ul<StyledCarouselSliderProps>`
@@ -14,6 +15,11 @@ export const StyledCarouselSlider = styled.ul<StyledCarouselSliderProps>`
   li {
     filter: brightness(50%);
     padding: 0 12px;
+    img {
+      width: 66.25rem;
+      border-radius: 4px;
+      object-fit: cover;
+    }
   }
 
   li.active {

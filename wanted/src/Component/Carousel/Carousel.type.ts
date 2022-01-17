@@ -9,3 +9,7 @@ export default interface CarouselProps {
 export interface StyledCarouselSliderProps {
   positionX: number;
 }
+
+export interface StyledCarouselArrowButtonProps {
+  positionX: number;
+}

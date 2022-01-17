@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/indent */
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { StyledArrowButtonProps } from './ArrowButton.type';
 
 const StyledArrowButton = styled.button<StyledArrowButtonProps>`

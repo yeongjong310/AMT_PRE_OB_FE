@@ -8,14 +8,14 @@
 import React, { ReactElement, useRef, useState } from 'react';
 import { StyledCarousel, StyledCarouselSlider } from './Carousel.styled';
 import CarouselProps from './Carousel.type';
-import CarouselArrowButton from './CarouselArrowButton.styled';
+import StyledCarouselArrowButton from './CarouselArrowButton.styled';
 
 export default function Carousel({ imgs, duration }: CarouselProps): ReactElement {
   const carouselRef = useRef<HTMLUListElement>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(2);
   const isMoving = useRef(false);
 
-  const slideWidth = carouselRef.current?.children[0].clientWidth || 1015;
+  const slideWidth = carouselRef.current?.children[0].clientWidth || 1084;
 
   const paddingExceptSlideWidth = () => (window.innerWidth - slideWidth) / 2;
 
@@ -67,13 +67,17 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
           ),
         )}
       </StyledCarouselSlider>
-      <CarouselArrowButton
+      <StyledCarouselArrowButton
+        positionX={paddingExceptSlideWidth() - 65}
+        className="carousel-arrow-button"
         arrowDirection="left"
         onClick={() => {
           setSlideToCenter(currentSlide - 1);
         }}
       />
-      <CarouselArrowButton
+      <StyledCarouselArrowButton
+        positionX={paddingExceptSlideWidth() - 60}
+        className="carousel-arrow-button"
         arrowDirection="right"
         onClick={() => {
           setSlideToCenter(currentSlide + 1);
