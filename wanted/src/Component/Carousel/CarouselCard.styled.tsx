@@ -53,5 +53,28 @@ const StyledCarouselCard = styled.div`
       height: 1em;
     }
   }
+
+  @media (max-width: 1199px) {
+    position: static;
+    margin: 0 auto;
+    text-align: center;
+    h2 {
+      font-size: 18px;
+      line-height: 1;
+    }
+    h3 {
+      margin-top: 6px;
+      height: auto;
+      font-size: 13px;
+      color: #666;
+      line-height: 1.15;
+    }
+    hr {
+      display: none;
+    }
+    a {
+      margin-top: 12px;
+      justify-content: center;
+    }
 `;
 export default StyledCarouselCard;

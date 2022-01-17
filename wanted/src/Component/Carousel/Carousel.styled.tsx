@@ -13,17 +13,17 @@ export const StyledCarouselSlider = styled.ul<StyledCarouselSliderProps>`
   display: flex;
   transform: translate3D(${({ positionX }) => positionX}px, 0, 0);
 
-  li {
+  > li {
     filter: brightness(50%);
     padding: 0 12px;
-    img {
-      width: 66.25rem;
-      border-radius: 4px;
-      object-fit: cover;
-    }
-    a {
+    > a {
       display: block;
       line-height: 0;
+      > img {
+        width: 66.25rem;
+        border-radius: 4px;
+        object-fit: cover;
+      }
     }
     .carousel-card {
       opacity: 0;
@@ -31,7 +31,7 @@ export const StyledCarouselSlider = styled.ul<StyledCarouselSliderProps>`
     }
   }
 
-  li.active {
+  > li.active {
     filter: brightness(100%);
     .carousel-card {
       opacity: 1;

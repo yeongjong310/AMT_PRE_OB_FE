@@ -1,13 +1,5 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable object-curly-newline */
-/* eslint-disable operator-linebreak */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable @typescript-eslint/indent */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable implicit-arrow-linebreak */
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { StyledCarousel, StyledCarouselSlider } from './Carousel.styled';
 import CarouselProps from './Carousel.type';
 import StyledCarouselArrowButton from './CarouselArrowButton.styled';
@@ -97,22 +89,22 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
         setIsPausedSlide(true);
       }}
       onMouseLeave={() => {
-        setIsPausedSlide(false);
+        setIsPausedSlide(true);
       }}
     >
       <StyledCarouselSlider ref={carouselRef} positionX={getSlidePositionX(currentSlide)}>
         {[...imgs.slice(imgs.length - 2, imgs.length), ...imgs, ...imgs.slice(0, 2)].map(
           ({ id, src, title, description }, index) => (
-            <li key={id + index} className={index === currentSlide ? 'active' : undefined}>
+            <li key={id + uuidv4()} className={index === currentSlide ? 'active' : undefined}>
+              <a href="#">
+                <img src={src} alt={`slide${id}`} />
+              </a>
               <CarouselCard
                 className="carousel-card"
                 title={title}
                 description={description}
                 href="#"
               />
-              <a href="#">
-                <img src={src} alt={`slide${id}`} />
-              </a>
             </li>
           ),
         )}
