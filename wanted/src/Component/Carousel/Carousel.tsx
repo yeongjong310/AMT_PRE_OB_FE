@@ -65,10 +65,10 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
   }, [currentSlide]);
 
   useEffect(() => {
-    const intervalId = setInterval(() => setSlideToCenter(currentSlide + 1), 4000);
+    const intervalId = setTimeout(() => setSlideToCenter(currentSlide + 1), 4000);
 
     return () => {
-      clearInterval(intervalId);
+      clearTimeout(intervalId);
     };
   }, [currentSlide, setSlideToCenter]);
 
