@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable object-curly-newline */
 /* eslint-disable operator-linebreak */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -10,6 +11,7 @@ import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'r
 import { StyledCarousel, StyledCarouselSlider } from './Carousel.styled';
 import CarouselProps from './Carousel.type';
 import StyledCarouselArrowButton from './CarouselArrowButton.styled';
+import CarouselCard from './CarouselCard';
 
 export default function Carousel({ imgs, duration }: CarouselProps): ReactElement {
   const carouselRef = useRef<HTMLUListElement>(null);
@@ -87,8 +89,9 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
     >
       <StyledCarouselSlider ref={carouselRef} positionX={getSlidePositionX(currentSlide)}>
         {[...imgs.slice(imgs.length - 2, imgs.length), ...imgs, ...imgs.slice(0, 2)].map(
-          ({ id, src }, index) => (
+          ({ id, src, title, description }, index) => (
             <li key={id + index} className={index === currentSlide ? 'active' : undefined}>
+              <CarouselCard title={title} description={description} href="#" />
               <img src={src} alt={`slide${id}`} />
             </li>
           ),

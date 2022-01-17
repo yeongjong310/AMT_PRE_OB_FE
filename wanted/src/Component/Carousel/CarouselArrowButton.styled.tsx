@@ -2,7 +2,10 @@
 /* eslint-disable implicit-arrow-linebreak */
 import styled from 'styled-components/macro';
 import ArrowButton from '../ArrowButton/ArrowButton';
-import { StyledCarouselArrowButtonProps } from './Carousel.type';
+
+export interface StyledCarouselArrowButtonProps {
+  positionX: number;
+}
 
 const StyledCarouselArrowButton = styled(ArrowButton)<StyledCarouselArrowButtonProps>`
   width: 30px;
