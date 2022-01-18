@@ -10,4 +10,5 @@ export default interface CarouselProps {
 
 export interface StyledCarouselSliderProps {
   positionX: number;
+  slideWidth: number;
 }

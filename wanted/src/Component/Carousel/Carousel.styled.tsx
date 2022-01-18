@@ -14,12 +14,13 @@ export const StyledCarouselSlider = styled.ul<StyledCarouselSliderProps>`
   transform: translate3D(${({ positionX }) => positionX}px, 0, 0);
 
   > li {
-    filter: brightness(50%);
+    position: relative;
     padding: 0 12px;
     > a {
       display: block;
       line-height: 0;
       > img {
+        filter: brightness(50%);
         width: 66.25rem;
         border-radius: 4px;
         object-fit: cover;
@@ -32,9 +33,24 @@ export const StyledCarouselSlider = styled.ul<StyledCarouselSliderProps>`
   }
 
   > li.active {
-    filter: brightness(100%);
+    img {
+      filter: brightness(100%);
+    }
     .carousel-card {
       opacity: 1;
+    }
+  }
+
+  @media (max-width: 1199px) {
+    li {
+      flex-shrink: 0;
+      box-sizing: border-box;
+      padding: 0 10px;
+      width: ${({ slideWidth }) => slideWidth}px;
+    }
+    li > a > img {
+      height: 11.4375rem;
+      width: 100%;
     }
   }
 `;

@@ -1,4 +1,5 @@
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
+import throttle from 'src/utils/throttle';
 import { StyledCarousel, StyledCarouselSlider } from './Carousel.styled';
 import CarouselProps from './Carousel.type';
 import StyledCarouselArrowButton from './CarouselArrowButton.styled';
@@ -7,10 +8,10 @@ import CarouselCard from './CarouselCard';
 export default function Carousel({ imgs, duration }: CarouselProps): ReactElement {
   const carouselRef = useRef<HTMLUListElement>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(2);
-  const isMoving = useRef(false);
   const [isPausedSlide, setIsPausedSlide] = useState<boolean>(false);
   const [innerWidth, setInnerWidth] = useState<number>(window.innerWidth);
   const [slideWidth, setSlideWidth] = useState<number>(0);
+  const isMoving = useRef(false);
 
   const paddingExceptSlideWidth = () => (innerWidth - slideWidth) / 2;
 
@@ -55,10 +56,9 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
   };
 
   useEffect(() => {
-    const handleResize = () => {
+    const handleResize = throttle(() => {
       setInnerWidth(window.innerWidth);
-    };
-
+    }, 300);
     window.addEventListener('resize', handleResize);
 
     return () => {
@@ -88,13 +88,13 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
         setIsPausedSlide(true);
       }}
       onMouseLeave={() => {
-        setIsPausedSlide(true);
+        setIsPausedSlide(false);
       }}
     >
       <StyledCarouselSlider
-        // eslint-disable-next-line no-return-assign
         ref={carouselRef}
         positionX={getSlidePositionX(currentSlide)}
+        slideWidth={innerWidth - 80}
       >
         {[...imgs.slice(imgs.length - 2, imgs.length), ...imgs, ...imgs.slice(0, 2)].map(
           ({ id, src, title, description }, index) => (
