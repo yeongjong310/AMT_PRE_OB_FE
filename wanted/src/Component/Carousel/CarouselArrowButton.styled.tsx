@@ -1,5 +1,3 @@
-/* eslint-disable no-confusing-arrow */
-/* eslint-disable implicit-arrow-linebreak */
 import styled from 'styled-components/macro';
 import ArrowButton from '../ArrowButton/ArrowButton';
 
