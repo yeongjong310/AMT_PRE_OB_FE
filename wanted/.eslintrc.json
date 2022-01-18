@@ -9,7 +9,8 @@
     "airbnb-typescript",
     "airbnb/hooks",
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -17,7 +18,7 @@
     "sourceType": "module",
     "project": ["./tsconfig.json"]
   },
-  "plugins": ["@typescript-eslint", "html"],
+  "plugins": ["@typescript-eslint", "html", "prettier"],
   "rules": {
     "@typescript-eslint/no-var-requires": "off",
     "import/extensions": [
@@ -30,6 +31,16 @@
         "tsx": "never"
       }
     ],
-    "quotes": [2, "single", { "allowTemplateLiterals": true }]
+    "quotes": [2, "single", { "allowTemplateLiterals": true }],
+    "object-curly-newline": [
+      "error",
+      {
+        "ImportDeclaration": { "multiline": true },
+        "ExportDeclaration": { "multiline": true }
+      }
+    ],
+    "prettier/prettier": "error",
+    "no-unused-expressions": "off",
+    "@typescript-eslint/no-unused-expressions": ["error"]
   }
 }
