@@ -20,8 +20,9 @@
   },
   "plugins": ["@typescript-eslint", "html", "prettier"],
   "rules": {
-    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-var-requires": "off", // require 모듈 변수에 담기 허용
     "import/extensions": [
+      // js, jsx, ts, tsx 확장 파일 허용
       "error",
       "ignorePackages",
       {
@@ -31,16 +32,8 @@
         "tsx": "never"
       }
     ],
-    "quotes": [2, "single", { "allowTemplateLiterals": true }],
-    "object-curly-newline": [
-      "error",
-      {
-        "ImportDeclaration": { "multiline": true },
-        "ExportDeclaration": { "multiline": true }
-      }
-    ],
-    "prettier/prettier": "error",
-    "no-unused-expressions": "off",
-    "@typescript-eslint/no-unused-expressions": ["error"]
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }], // 홑따움표, 백틱 사용
+    "no-nested-ternary": "off", // 중첩 삼항 연산자 사용 허용
+    "prettier/prettier": "error"
   }
 }
