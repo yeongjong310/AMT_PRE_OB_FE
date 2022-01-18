@@ -1,5 +1,4 @@
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { StyledCarousel, StyledCarouselSlider } from './Carousel.styled';
 import CarouselProps from './Carousel.type';
 import StyledCarouselArrowButton from './CarouselArrowButton.styled';
@@ -50,6 +49,8 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
 
   const updateActiveSlide = (items: Element[], slide: number) => {
     items?.forEach(($item, index) => {
+      // 사용하지 않는 표현식은 일반적으로 지워야 하지만, 아래의 경우 예외 케이스로 this line에만 eslint 예외 처리
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       index === slide ? $item.classList.add('active') : $item.classList.remove('active');
     });
   };
@@ -72,7 +73,6 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
     }
   }, [currentSlide]);
 
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (!isPausedSlide) {
       const id = window.setTimeout(() => setSlideToCenter(currentSlide + 1), 4000);
@@ -81,6 +81,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
         clearTimeout(id);
       };
     }
+    return undefined;
   }, [currentSlide, setSlideToCenter, isPausedSlide]);
 
   return (
@@ -95,8 +96,10 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
       <StyledCarouselSlider ref={carouselRef} positionX={getSlidePositionX(currentSlide)}>
         {[...imgs.slice(imgs.length - 2, imgs.length), ...imgs, ...imgs.slice(0, 2)].map(
           ({ id, src, title, description }, index) => (
-            <li key={id + uuidv4()} className={index === currentSlide ? 'active' : undefined}>
-              <a href="#">
+            // id + index로 고유키, 예측가능한 키 생성하기 위해 this line에만 eslint 예외 처리
+            // eslint-disable-next-line react/no-array-index-key
+            <li key={id + index} className={index === currentSlide ? 'active' : undefined}>
+              <a href="##">
                 <img src={src} alt={`slide${id}`} />
               </a>
               <CarouselCard
