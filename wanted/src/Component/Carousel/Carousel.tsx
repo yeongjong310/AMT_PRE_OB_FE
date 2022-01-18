@@ -10,8 +10,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
   const isMoving = useRef(false);
   const [isPausedSlide, setIsPausedSlide] = useState<boolean>(false);
   const [innerWidth, setInnerWidth] = useState<number>(window.innerWidth);
-
-  const slideWidth = carouselRef.current?.children[0].clientWidth || 1084;
+  const [slideWidth, setSlideWidth] = useState<number>(0);
 
   const paddingExceptSlideWidth = () => (innerWidth - slideWidth) / 2;
 
@@ -83,7 +82,6 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
     }
     return undefined;
   }, [currentSlide, setSlideToCenter, isPausedSlide]);
-
   return (
     <StyledCarousel
       onMouseEnter={() => {
@@ -93,12 +91,24 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
         setIsPausedSlide(true);
       }}
     >
-      <StyledCarouselSlider ref={carouselRef} positionX={getSlidePositionX(currentSlide)}>
+      <StyledCarouselSlider
+        // eslint-disable-next-line no-return-assign
+        ref={carouselRef}
+        positionX={getSlidePositionX(currentSlide)}
+      >
         {[...imgs.slice(imgs.length - 2, imgs.length), ...imgs, ...imgs.slice(0, 2)].map(
           ({ id, src, title, description }, index) => (
-            // id + index로 고유키, 예측가능한 키 생성하기 위해 this line에만 eslint 예외 처리
-            // eslint-disable-next-line react/no-array-index-key
-            <li key={id + index} className={index === currentSlide ? 'active' : undefined}>
+            <li
+              // id + index로 고유키, 예측가능한 키 생성하기 위해 this line에만 eslint 예외 처리
+              // eslint-disable-next-line react/no-array-index-key
+              key={id + index}
+              className={index === currentSlide ? 'active' : undefined}
+              ref={ref => {
+                if (ref && index === 0) {
+                  setSlideWidth(ref.clientWidth);
+                }
+              }}
+            >
               <a href="##">
                 <img src={src} alt={`slide${id}`} />
               </a>
@@ -114,7 +124,6 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
       </StyledCarouselSlider>
       <StyledCarouselArrowButton
         positionX={paddingExceptSlideWidth() - 65}
-        className="carousel-arrow-button"
         arrowDirection="left"
         onClick={() => {
           setSlideToCenter(currentSlide - 1);
@@ -122,7 +131,6 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
       />
       <StyledCarouselArrowButton
         positionX={paddingExceptSlideWidth() - 60}
-        className="carousel-arrow-button"
         arrowDirection="right"
         onClick={() => {
           setSlideToCenter(currentSlide + 1);
