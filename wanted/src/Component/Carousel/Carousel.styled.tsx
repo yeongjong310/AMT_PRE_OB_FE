@@ -4,6 +4,12 @@ import { StyledCarouselSliderProps } from './Carousel.type';
 export const StyledCarousel = styled.div`
   overflow: hidden;
   position: relative;
+
+  @media (max-width: 1199px) {
+    > button {
+      display: none;
+    }
+  }
 `;
 
 export const StyledCarouselSlider = styled.ul<StyledCarouselSliderProps>`
