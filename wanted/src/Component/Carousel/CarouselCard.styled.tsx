@@ -59,6 +59,14 @@ const StyledCarouselCard = styled.div`
     margin: 0 auto;
     text-align: center;
     width: 100%;
+    white-space: nowrap;
+    > * {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: calc(100%);
+      margin-left: 0px;
+      margin-right: 0px;
+    }
     h2 {
       font-size: 18px;
       line-height: 1;
