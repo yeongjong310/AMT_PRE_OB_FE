@@ -35,13 +35,15 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
       if (realSlide !== slide) {
         setTimeout(() => {
           if (!carouselRef.current) return;
-          carouselRef.current.style.transition = 'none';
           setCurrentSlide(realSlide);
         }, duration);
       }
 
       setTimeout(() => {
         isMoving.current = false;
+        if (carouselRef.current) {
+          carouselRef.current.style.transition = 'none';
+        }
       }, duration);
     },
     [duration],
@@ -58,7 +60,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
   useEffect(() => {
     const handleResize = throttle(() => {
       setInnerWidth(window.innerWidth);
-    }, 300);
+    }, 200);
     window.addEventListener('resize', handleResize);
 
     return () => {
@@ -82,6 +84,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
     }
     return undefined;
   }, [currentSlide, setSlideToCenter, isPausedSlide]);
+
   return (
     <StyledCarousel
       onMouseEnter={() => {
