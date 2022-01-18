@@ -59,11 +59,13 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
 
   useEffect(() => {
     const handleResize = throttle(() => {
+      setIsPausedSlide(true);
       setInnerWidth(window.innerWidth);
     }, 200);
     window.addEventListener('resize', handleResize);
 
     return () => {
+      setIsPausedSlide(false);
       window.removeEventListener('resize', handleResize);
     };
   }, [innerWidth]);
