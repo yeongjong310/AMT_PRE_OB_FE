@@ -138,7 +138,6 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
         }}
         onMouseUp={swapeEnd}
         onMouseLeave={() => {
-          console.log(123);
           swapeEnd();
         }}
       >
