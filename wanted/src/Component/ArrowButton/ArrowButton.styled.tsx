@@ -6,11 +6,6 @@ const StyledArrowButton = styled.button<StyledArrowButtonProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
   width: 36px;
   height: 36px;
   background-color: #fff;
