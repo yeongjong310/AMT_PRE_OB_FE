@@ -17,13 +17,16 @@ button {
   padding: 0;
   border: 0;
   background: none;
+  cursor: pointer;
 }
 
 a {
   text-decoration: none;
+  cursor: pointer;
 }
 
 ul {
+  margin: 0;
   padding: 0;
   list-style: none;
 }
