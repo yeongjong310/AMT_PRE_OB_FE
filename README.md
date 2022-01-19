@@ -4,4 +4,4 @@
 
 ## 배포링크
 
-https://boring-murdock-90cbfd.netlify.app
+https://wantedpreob.netlify.app/
