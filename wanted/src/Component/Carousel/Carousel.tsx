@@ -59,7 +59,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
   let initialMousePosX = 0;
   let offsetX = 0;
 
-  const move = (e: MouseEvent) => {
+  const swapeStart = (e: MouseEvent) => {
     // 오프셋 = 현재(드래그하고 있는 시점) 마우스 포인터 위치 - 드래그 시작 시점의 마우스 포인터 위치
     offsetX = e.clientX - initialMousePosX;
 
@@ -70,15 +70,15 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
     }
   };
 
-  const moveEnd = () => {
-    document.removeEventListener('mousemove', move);
+  const swapeEnd = () => {
+    document.removeEventListener('mousemove', swapeStart);
     if (offsetX > 105) {
       setSlideToCenter(currentSlide - 1);
     } else if (offsetX < -105) {
       setSlideToCenter(currentSlide + 1);
-    } else {
-      setSlideToCenter(currentSlide);
     }
+
+    // 드래그로 이동했던 transform 초기화
     if (carouselRef.current) {
       carouselRef.current.style.transform = '';
     }
@@ -134,11 +134,13 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
         onMouseDown={event => {
           event.preventDefault();
           initialMousePosX = event.clientX - offsetX;
-
-          document.addEventListener('mousemove', move);
+          document.addEventListener('mousemove', swapeStart);
         }}
-        onMouseUp={moveEnd}
-        onMouseLeave={moveEnd}
+        onMouseUp={swapeEnd}
+        onMouseLeave={() => {
+          console.log(123);
+          swapeEnd();
+        }}
       >
         {[...imgs.slice(imgs.length - 2, imgs.length), ...imgs, ...imgs.slice(0, 2)].map(
           ({ id, src, title, description }, index) => (
