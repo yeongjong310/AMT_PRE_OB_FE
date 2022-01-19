@@ -4,7 +4,7 @@ import { StyledCarouselSliderProps } from './Carousel.type';
 export const StyledCarousel = styled.div`
   overflow: hidden;
   position: relative;
-
+  padding-top: 20px;
   @media (max-width: 1199px) {
     > button {
       display: none;
@@ -13,9 +13,7 @@ export const StyledCarousel = styled.div`
 `;
 
 export const StyledCarouselSlider = styled.ul<StyledCarouselSliderProps>`
-  padding: 0;
   margin: 0;
-  list-style: none;
   display: flex;
   transform: translate3D(${({ positionX }) => positionX}px, 0, 0);
 
