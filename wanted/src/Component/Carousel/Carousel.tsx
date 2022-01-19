@@ -12,7 +12,6 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
   const [innerWidth, setInnerWidth] = useState<number>(window.innerWidth);
   const [slideWidth, setSlideWidth] = useState<number>(0);
   const isMoving = useRef(false);
-
   const paddingExceptSlideWidth = () => (innerWidth - slideWidth) / 2;
 
   const getSlidePositionX = (slide: number) => slide * -slideWidth + paddingExceptSlideWidth();
@@ -55,6 +54,38 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       index === slide ? $item.classList.add('active') : $item.classList.remove('active');
     });
+  };
+
+  let initialMousePosX = 0;
+  let offsetX = 0;
+
+  const move = (e: MouseEvent) => {
+    // 오프셋 = 현재(드래그하고 있는 시점) 마우스 포인터 위치 - 드래그 시작 시점의 마우스 포인터 위치
+    offsetX = e.clientX - initialMousePosX;
+
+    if (carouselRef.current) {
+      carouselRef.current.style.transform = `translate3d(${
+        offsetX + getSlidePositionX(currentSlide)
+      }px, 0, 0)`;
+    }
+  };
+
+  const moveEnd = () => {
+    document.removeEventListener('mousemove', move);
+    if (offsetX > 105) {
+      setSlideToCenter(currentSlide - 1);
+    } else if (offsetX < -105) {
+      setSlideToCenter(currentSlide + 1);
+    } else {
+      setSlideToCenter(currentSlide);
+    }
+    if (carouselRef.current) {
+      carouselRef.current.style.transform = '';
+    }
+
+    // 오프셋, 시작지점 초기화
+    initialMousePosX = 0;
+    offsetX = 0;
   };
 
   useEffect(() => {
@@ -100,6 +131,14 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
         ref={carouselRef}
         positionX={getSlidePositionX(currentSlide)}
         slideWidth={innerWidth - 80}
+        onMouseDown={event => {
+          event.preventDefault();
+          initialMousePosX = event.clientX - offsetX;
+
+          document.addEventListener('mousemove', move);
+        }}
+        onMouseUp={moveEnd}
+        onMouseLeave={moveEnd}
       >
         {[...imgs.slice(imgs.length - 2, imgs.length), ...imgs, ...imgs.slice(0, 2)].map(
           ({ id, src, title, description }, index) => (
@@ -110,7 +149,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
               className={index === currentSlide ? 'active' : undefined}
               ref={ref => {
                 if (ref && index === 0) {
-                  setSlideWidth(ref.clientWidth);
+                  setSlideWidth(ref.getBoundingClientRect().width);
                 }
               }}
             >
