@@ -5,3 +5,7 @@
 ## 배포링크
 
 https://wantedpreob.netlify.app/
+
+## wiki
+
+https://github.com/yeongjong310/wanted_pre_onboarding/wiki
