@@ -16,6 +16,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
 
   const getSlidePositionX = (slide: number) => slide * -slideWidth + paddingExceptSlideWidth();
 
+  // TODO: currentSilde가 변경되면 setSlideToCenter가 실행되도록 하는 구조로 옮기는 것이 더 좋을 듯 하다.
   const setSlideToCenter = useCallback(
     (slide: number): void => {
       if (!carouselRef.current || isMoving.current) return;
@@ -136,6 +137,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
           initialMousePosX = event.clientX - offsetX;
           document.addEventListener('mousemove', swapeStart);
         }}
+        // TODO: onMouseUp 이벤트가 slider에 바인딩되면, 마우스가 외부로 이동했을 때 발생하지 않는다. 따라서 document에 바인딩하는 것이 좋을 듯 하다.
         onMouseUp={swapeEnd}
         onMouseLeave={() => {
           swapeEnd();
