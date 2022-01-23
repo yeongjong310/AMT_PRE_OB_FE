@@ -134,6 +134,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
         positionX={getSlidePositionX(currentSlide)}
         slideWidth={innerWidth - 80}
         onMouseDown={event => {
+          if (isMoving.current) return;
           event.preventDefault();
           initialMousePosX = event.clientX - offsetX;
           document.onmousemove = swapeStart;
