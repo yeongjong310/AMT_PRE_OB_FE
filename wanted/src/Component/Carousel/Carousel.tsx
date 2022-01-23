@@ -13,9 +13,8 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
   const [slideWidth, setSlideWidth] = useState<number>(0);
   const isMoving = useRef(false);
   const paddingExceptSlideWidth = () => (innerWidth - slideWidth) / 2;
-
   const getSlidePositionX = (slide: number) => slide * -slideWidth + paddingExceptSlideWidth();
-  console.log(123);
+
   // TODO: currentSilde가 변경되면 setSlideToCenter가 실행되도록 하는 구조로 옮기는 것이 더 좋을 듯 하다.
   const setSlideToCenter = useCallback(
     (slide: number): void => {
@@ -151,7 +150,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
               key={id + index}
               className={index === currentSlide ? 'active' : undefined}
               ref={ref => {
-                if (ref && index === 0) {
+                if (ref && slideWidth === 0 && index === 0) {
                   setSlideWidth(ref.getBoundingClientRect().width);
                 }
               }}
