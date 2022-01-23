@@ -72,7 +72,8 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
   };
 
   const swapeEnd = () => {
-    document.removeEventListener('mousemove', swapeStart);
+    document.onmousemove = null;
+
     if (offsetX > 105) {
       setSlideToCenter(currentSlide - 1);
     } else if (offsetX < -105) {
@@ -135,13 +136,10 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
         onMouseDown={event => {
           event.preventDefault();
           initialMousePosX = event.clientX - offsetX;
-          document.addEventListener('mousemove', swapeStart);
+          document.onmousemove = swapeStart;
         }}
-        // TODO: onMouseUp 이벤트가 slider에 바인딩되면, 마우스가 외부로 이동했을 때 발생하지 않는다. 따라서 document에 바인딩하는 것이 좋을 듯 하다.
         onMouseUp={swapeEnd}
-        onMouseLeave={() => {
-          swapeEnd();
-        }}
+        onMouseLeave={swapeEnd}
       >
         {[...imgs.slice(imgs.length - 2, imgs.length), ...imgs, ...imgs.slice(0, 2)].map(
           ({ id, src, title, description }, index) => (
