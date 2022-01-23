@@ -12,6 +12,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
   const [innerWidth, setInnerWidth] = useState<number>(window.innerWidth);
   const [slideWidth, setSlideWidth] = useState<number>(0);
   const isMoving = useRef(false);
+  console.log('render');
   const paddingExceptSlideWidth = () => (innerWidth - slideWidth) / 2;
   const getSlidePositionX = (slide: number) => slide * -slideWidth + paddingExceptSlideWidth();
 
@@ -151,6 +152,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
               className={index === currentSlide ? 'active' : undefined}
               ref={ref => {
                 if (ref && slideWidth === 0 && index === 0) {
+                  console.log(ref, 'ref', slideWidth);
                   setSlideWidth(ref.getBoundingClientRect().width);
                 }
               }}
