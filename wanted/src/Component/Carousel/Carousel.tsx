@@ -38,7 +38,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
           setCurrentSlide(realSlide);
         }, duration);
       }
-
+      // TODO: 첫번째에서 마지막으로 가는 순간 카드가 transition 되지 않도록 수정하기, 그반대도 같음.
       setTimeout(() => {
         isMoving.current = false;
         if (carouselRef.current) {
@@ -151,7 +151,7 @@ export default function Carousel({ imgs, duration }: CarouselProps): ReactElemen
               key={id + index}
               className={index === currentSlide ? 'active' : undefined}
               ref={ref => {
-                if (ref && slideWidth === 0 && index === 0) {
+                if (ref && index === 0) {
                   setSlideWidth(ref.getBoundingClientRect().width);
                 }
               }}
